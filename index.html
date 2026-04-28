@@ -1,0 +1,24 @@
+<script>
+  async function startAR() {
+    // 1. Fetch your "pasted" links from the JSON file
+    const response = await fetch('./config.json');
+    const data = await response.json();
+    const linkList = data.links;
+
+    const sceneEl = document.querySelector('a-scene');
+
+    // 2. Listen for ANY photo being detected
+    sceneEl.addEventListener("targetFound", (event) => {
+        const index = event.detail.targetIndex; // Which photo was seen?
+        const destination = linkList[index];    // Get link from your list
+        
+        if (destination) {
+            // Redirect to the link
+            window.location.href = destination;
+        }
+    });
+  }
+
+  // Initialize the system
+  startAR();
+</script>
